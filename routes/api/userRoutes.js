@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { User, Thought } = require('../../models');
 
 router.get('/', (req, res) => {
-    User.find()
+    User.find().populate('thoughts')
         .then(users => {
             res.json(users);
         })
@@ -59,7 +59,7 @@ router.delete('/:id', (req, res) => {
                 console.log(err);
                 res.status(500).json({ msg: 'Error', err });
             });
-          res.json(deletedUser);
+          res.json({ msg: "Success" });
       })
       .catch(err => {
           console.log(err);
