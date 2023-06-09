@@ -1,5 +1,4 @@
 const express = require('express');
-const db = require('./config/connection');
 const routes = require('./routes');
 
 const PORT = process.env.PORT || 3000;
@@ -9,8 +8,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
 
-db.once('open', () => {
-    app.listen(PORT, () => {
-        console.log(`Running on port ${PORT}`);
+mongoose.connect('mongodb://127.0.0.1:27017/social-network')
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Running on port ${PORT}`);
+        });
     });
-});
